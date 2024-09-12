@@ -1,0 +1,73 @@
+<div class="modal" id="openPastoralModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span id="pastoralName"></span></h5>
+            </div>
+            <div class="modal-body">
+                <strong>Membros:</strong> <span id="membersList"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger mt-5" data-bs-dismiss="modal">
+                    <i class="fa fa-close pe-1"></i>Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var originalMembersList = [];
+
+    function fillModalMembers(membersList) {
+        var membersListElement = document.getElementById("membersList");
+        membersListElement.innerHTML = '';
+
+        if (membersList.length === 0) {
+            var noDataMessage = document.createElement("p");
+            noDataMessage.textContent = "Nenhum dado encontrado.";
+            membersListElement.appendChild(noDataMessage);
+        } else {
+            for (var i = 0; i < membersList.length; i++) {
+                var memberItem = document.createElement("li");
+                memberItem.textContent = membersList[i].name + " (" + membersList[i].elo + ")";
+                membersListElement.appendChild(memberItem);
+            }
+        }
+    }
+
+    function filterMembers(searchInput) {
+        console.log("filterMembers:", searchInput);
+        if (searchInput === "") {
+            fillModalMembers(originalMembersList);
+        } else {
+            var filteredMembers = originalMembersList.filter(function (member) {
+                return member.name.toLowerCase().includes(searchInput.toLowerCase());
+            });
+            fillModalMembers(filteredMembers);
+        }
+    }
+
+    document.getElementById("searchForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var searchInput = document.getElementById("search").value;
+        console.log("Search Input:", searchInput);
+        filterMembers(searchInput);
+    });
+
+    document.getElementById("searchButton").addEventListener("click", function (event) {
+        event.preventDefault();
+        var searchInput = document.getElementById("search").value;
+        console.log("Search Button Clicked. Search Input:", searchInput);
+        filterMembers(searchInput);
+    });
+
+    function openPastoralModal(pastoralName, membersList) {
+        document.getElementById("pastoralName").textContent = pastoralName;
+        originalMembersList = membersList;
+        filterMembers(""); // Começa sem filtro
+    }
+</script>
+
+

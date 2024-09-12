@@ -1,0 +1,81 @@
+{% extends "layouts/base-fullscreen.html" %}
+{% load static %}
+{% block title %} Login {% endblock %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+
+    <div class="min-vh-100 d-flex flex-row align-items-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="card-group d-block d-md-flex row">
+              <div class="card col-md-7 p-4 mb-0">
+                <div class="card-body">
+                  <h1>Login</h1>
+                  <p class="text-medium-emphasis">
+                      Adicione suas credenciais
+                    {% if form.non_field_errors %}
+                        <span><small class="form-text text-danger no-bullets">{{ form.non_field_errors }}</small></span>
+                    {% endif %}
+                  </p>
+
+                  <form method="POST" action="">
+
+                    {% csrf_token %}
+
+                        <div class="input-group mb-3"><span class="input-group-text">
+                            <svg class="icon">
+                              <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+                            </svg></span>
+                          {{ form.email }}
+                        </div>
+                        <div class="input-group mb-4"><span class="input-group-text">
+                            <svg class="icon">
+                              <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                            </svg></span>
+                          {{ form.password }}
+                        </div>
+                        <div class="row">
+                          <div class="col-6">
+                            <button class="btn btn-primary px-4" type="submit" name="login">Entrar</button>
+                          </div>
+                            <div class="col-6 text-end">
+                            <a href="{% url 'forgot_password' %}" class="btn btn-link px-0">Esqueceu a senha?</a>
+                          </div>
+                        </div>
+                  </form>
+
+                </div>
+              </div>
+              <div class="card col-md-5 text-white bg-primary py-5" >
+                <div class="card-body text-center">
+                  <div>
+                    <h2>
+                      CRP
+                    </h2>
+                    <p>
+                     COMUNIDADE RENASCIDOS EM PENTECOSTES
+                    </p>
+                   <div class="header-brand">
+                     <img src="{% static 'assets/img/logo_rp.jpg' %}" width="200" height="150" alt="logo-crp" >
+                   </div>
+
+                    <br />
+                    <p style="margin-right:20px">
+                      &copy; <a class="text-white" target="_blank" href="https://www.renascidosempentecostes.com/" style="text-decoration: none;">CRP</a>
+                    </p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}{% endblock javascripts %}

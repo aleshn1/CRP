@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Lista de Membros</title>
+    <style>
+        @page {
+            size: letter landscape;
+            margin: 1cm;
+            }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background-color: #fff;
+        }
+
+        .header-info h2{
+        text-align: center;
+        font-size: 15px;
+        margin-top: -30px;
+
+
+        }
+
+       .logo {
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .logo img {
+            width: 75px;
+            height: 63px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: -40px;
+            font-size: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .empty-data {
+            text-align: center;
+            padding: 10px;
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Your HTML content here -->
+    <div class="logo">
+        <img src="https://static.wixstatic.com/media/2f6ab0_15b2b6906b5d4b44a77ad350de99e10d~mv2.png/v1/fill/w_75,h_63,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/2f6ab0_15b2b6906b5d4b44a77ad350de99e10d~mv2.png"
+             alt="Logo"></img>
+    </div>
+    <div class="header-info">
+        <h2>Comunidade Renascidos em Pentecostes</h2>
+    </div>
+    <div class="container">
+        <div class="table-container">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        {% for coluna in colunas_selecionadas %}
+                        <th>{{ coluna }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member_data in table_data %}
+                    <tr>
+                        {% for coluna in member_data %}
+                        <td>{{ coluna }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="empty-data">Nenhum membro presente.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p style="text-align:right; margin-top:40px">{{ date }}</p>
+</body>
+</html>

@@ -1,0 +1,97 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Página em Branco {% endblock %}
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+<div class="body flex-grow-1">
+    <div class="mt-5">
+        <a class="p-2 ms-3" href="{% url 'home' %}">
+            <i class="fa fa-arrow-left"></i> Voltar para a página inicial</a>
+        <a class="btn btn-sm btn-info dropdown-toggle" role="button" id="dropdownMenuLink"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            Exportar
+        </a>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exportModalPdf">
+                <i class="fa fa-file-pdf-o pe-1"></i>PDF
+            </a>
+            </li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exportModalExcel">
+                <i class="fa fa-file-excel-o pe-1"></i>EXCEL</a>
+            </li>
+        </ul>
+    </div>
+
+    <form action="" method="GET">
+        <div class="col-sm-12">
+            <div class="form-group mt-5 px-2 ms-3 me-3">
+                <div class="input-group ">
+                    <input class="form-control" id="search" name="search"
+                           placeholder="Pesquise um membro por nome"
+                           type="text"
+                           data-placement="top" data-bs-toggle="tooltip"
+                           title="Informe o nome do membro que deseja pesquisar">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i>
+                            <span class="sr-only">Pesquisar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive text-center p-2 ms-3 me-3" id="data-box">
+        <table class="table table-hover table-bordered table-full-width">
+            <thead class="text-start table-light">
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Data de Nascimento</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Celular</th>
+                <th scope="col">Pastoral</th>
+                <th scope="col">Elo</th>
+            </tr>
+            </thead>
+            <tbody class="text-start">
+            {% for member in members_list %}
+            <tr>
+                <td scope="row">
+                    <a class="text-info" data-placement="top"
+                       data-bs-toggle="tooltip" href="{% url 'member_details' member.id %}"
+                       title="Veja mais detalhes sobre este membro" style="text-decoration:none">
+                        {{ member.nome_completo }}
+                    </a>
+                </td>
+                <td scope="row">
+                    {{ member.dt_nascimento | date:"d/m/Y" }}
+                </td>
+                <td scope="row">{% if member.telefone %}{{ member.telefone }}{% else %} Não informado {% endif %}</td>
+                <td scope="row">{% if member.celular %}{{ member.celular }}{% else %} Não informado {% endif %}</td>
+                <td scope="row" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Para saber em quais pastorais que este membro pertence, acesse a tela de detalhes">
+                    {% if member.pastorais %} {{member.pastorais.count}} pastorais {% else %} Não informado{% endif %}
+                </td>
+                <td scope="row">{% if member.elo %} {{member.get_elo_display}} {% else %} Não informado {% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="ml-2 mr-2 alert alert-warning" role="alert">
+                    <strong>Nenhum dado encontrado.</strong>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if members_list %}
+    <div class="col-sm-12">
+        {% include 'includes/pagination.html' with page=members_list %}
+    </div>
+    {% endif %}
+    {% include 'includes/modal_export_pdf.html' %}
+    {% include 'includes/modal_export_excel.html' %}
+</div>
+
+{% endblock content %}

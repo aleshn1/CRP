@@ -1,0 +1,102 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Página em Branco {% endblock %}
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+
+<div class="body flex-grow-1">
+    <div class="mt-5">
+
+        <a class="p-2 ms-3" href="{% url 'home' %}">
+            <i class="fa fa-arrow-left"></i> Voltar para a página inicial</a>
+        <a class="btn btn-sm btn-info dropdown-toggle" role="button" id="dropdownMenuLink"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            Exportar
+        </a>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exportModalPdf">
+                <i class="fa fa-file-pdf-o pe-1"></i>PDF
+            </a>
+            </li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exportModalExcel">
+                <i class="fa fa-file-excel-o pe-1"></i>EXCEL</a>
+            </li>
+        </ul>
+    </div>
+
+    <form action="" method="GET">
+        <div class="col-sm-12">
+            <div class="form-group mt-5 px-2 ms-3 me-3">
+                <div class="input-group ">
+                    <input class="form-control" id="search" name="search"
+                           placeholder="Pesquisar um vocacionado por nome"
+                           type="text"
+                           data-placement="top" data-bs-toggle="tooltip"
+                           title="Informe o nome do vocacionado que deseja pesquisar">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i>
+                            <span class="sr-only">Pesquisar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive text-center p-2 ms-3 me-3" id="data-box">
+        <table class="table table-hover table-bordered table-full-width">
+            <thead class="text-start table-light">
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Data de Nascimento</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Celular</th>
+                <th scope="col">Data de Entrada</th>
+                <th scope="col">Pastoral</th>
+                <th scope="col">Orientador</th>
+            </tr>
+
+            </thead>
+            <tbody class="text-start">
+            {% for vocacionado in vocacionado_list %}
+            <tr>
+                <td scope="row">
+                    <a class="text-info" data-placement="top"
+                       data-bs-toggle="tooltip" href="{% url 'detalhes_vocacionados' vocacionado.id %}"
+                       title="Veja mais detalhes sobre este membro" style="text-decoration:none">
+                        {% if vocacionado.nome_completo %}{{ vocacionado.nome_completo }}{% else %}Não informado{% endif %}
+                    </a>
+                </td>
+                <td scope="row">
+                    {% if vocacionado.data_nascimento %}{{ vocacionado.data_nascimento |date:"d/m/Y"}}{% else %}Não informado{% endif %}
+                </td>
+                <td scope="row">{% if vocacionado.telefone %}{{ vocacionado.telefone }}{% else %}Não informado{% endif %}</td>
+                <td scope="row">{% if vocacionado.celular %}{{ vocacionado.celular }}{% else %}Não informado{% endif %}</td>
+                <td scope="row">{% if vocacionado.data_entrada %}{{ vocacionado.data_entrada|date:"d/m/Y" }}{% else %}Não informado{% endif %}</td>
+                <td scope="row"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="Para saber em quais pastorais que este vocacionado pertence, acesse a tela de detalhes">
+                    {% if vocacionado.pastorais %}{{ vocacionado.pastorais.count }} Pastorais{% else %}Não informado{% endif %}</td>
+                <td scope="row">{% if vocacionado.orientador %}{{ vocacionado.orientador }}{% else %}Não informado{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="ml-2 mr-2 alert alert-warning" role="alert">
+                    <strong>Nenhum dado encontrado.</strong>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if vocacionado_list %}
+    <div class="col-sm-12">
+        {% include 'includes/pagination.html' with page=vocacionado_list %}
+    </div>
+    {% endif %}
+</div>
+{% include 'includes/modal/modal_vocacionados_export_pdf.html' %}
+{% include 'includes/modal/modal_vocacionados_export_excel.html' %}
+{% endblock content %}

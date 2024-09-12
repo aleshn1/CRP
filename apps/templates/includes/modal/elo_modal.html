@@ -1,0 +1,37 @@
+<div class="modal" id="openEloModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span id="eloName"></span></h5>
+            </div>
+            <div class="modal-body">
+                <strong>Membros:</strong> <span id="membersList"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger mt-5" data-bs-dismiss="modal"><i
+                        class="fa fa-close pe-1"></i>Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openEloModal(eloName, membersList) {
+    document.getElementById("eloName").textContent = eloName;
+    document.getElementById("membersList").textContent = membersList;
+    var membersListElement = document.getElementById("membersList");
+    membersListElement.innerHTML = '';
+
+    for (var i = 0; i < membersList.length; i++) {
+        var memberItem = document.createElement("li");
+        memberItem.textContent = membersList[i].name;
+        membersListElement.appendChild(memberItem);
+    }
+}
+
+</script>
+
+
+
+

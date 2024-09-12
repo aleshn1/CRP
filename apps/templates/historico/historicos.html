@@ -1,0 +1,96 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Timeline de Movimentações {% endblock %}
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+<form action="" method="GET">
+        <div class="col-sm-12">
+            <div class="form-group mt-5 px-2 ms-3 me-3">
+                <div class="input-group ">
+                    <input class="form-control" id="search" name="search"
+                           placeholder="Pesquisar um Membro por nome"
+                           type="text"
+                           data-placement="top" data-bs-toggle="tooltip"
+                           title="Informe o nome do membro que deseja pesquisar">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i>
+                            <span class="sr-only">Pesquisar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<div class="card ms-4 me-4 mt-4 mb-4">
+    <h5 class="card-header">
+        Histórico de Movimentações
+    </h5>
+    <div class="card-body p-0">
+        <div class="table-responsive text-center p-2">
+            <table class="table table-hover table-bordered table-full-width mb-0">
+                <thead class="text-start table-light">
+                <tr>
+                    <th scope="col">Membro</th>
+                    <th scope="col">Elo</th>
+                    <th scope="col">Pastorais Atuais</th>
+                    <th scope="col">Pastorais Adicionadas</th>
+                    <th scope="col">Pastorais Removidas</th>
+                    <th scope="col">Data da Mudança</th>
+                </tr>
+                </thead>
+                <tbody class="text-start">
+                {% for historico in historicos %}
+                <tr>
+                    <td scope="row">
+                        {{ historico.membro.nome_completo }}
+                    </td>
+                    <td scope="row">{{ historico.novo_elo }}</td>
+                    <td>
+                        {% if historico.pastorais_atuais.all %}
+                        {% for pastoral in historico.pastorais_atuais.all %}
+                        {{ pastoral }},
+                        {% endfor %}
+                        {% else %}
+                        Nenhuma pastoral atual
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if historico.pastorais_adicionadas.all %}
+                        {% for pastoral in historico.pastorais_adicionadas.all %}
+                        {{ pastoral }},
+                        {% endfor %}
+                        {% else %}
+                        Nenhuma pastoral adicionada
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if historico.pastorais_removidas.all %}
+                        {% for pastoral in historico.pastorais_removidas.all %}
+                        {{ pastoral }},
+                        {% endfor %}
+                        {% else %}
+                        Nenhuma pastoral removida
+                        {% endif %}
+                    </td>
+                    <td scope="row"> {{ historico.data_mudanca |date:"d/m/Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="ml-2 mr-2 alert alert-warning" role="alert">
+                        <strong>Nenhum dado encontrado.</strong>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% if historicos %}
+<div class="col-sm-12">
+    {% include 'includes/pagination.html' with page=historicos %}
+</div>
+{% endif %}
+{% endblock content %}

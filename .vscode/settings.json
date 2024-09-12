@@ -1,0 +1,17 @@
+{
+    "cSpell.language": "en,pt,pt-BR",
+    "cSpell.words": [
+        "educacao",
+        "especializacao",
+        "graduacao",
+        "medio",
+        "tecnico",
+        "tecnologo",
+        "Tecnologo",
+        "Usuario"
+    ],
+    "editor.tabCompletion": "on",
+    "diffEditor.codeLens": true,
+    "MutableAI.upsell": true,
+    "commentTranslate.targetLanguage": "pt"
+}

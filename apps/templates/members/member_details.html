@@ -1,0 +1,152 @@
+{% extends 'layouts/base.html' %}
+{% block titulo %}Mais Detalhes | {% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="col ">
+    {% include 'includes/messages_component.html' with messages=messages %}
+    <div class="mt-4">
+        <a class="p-2 ms-3" href="{% url 'list-members' %}">
+            <i class="fa fa-arrow-left"></i> Voltar</a>
+    </div>
+    <div class="card ms-4 me-4 mt-4 mb-4">
+        <h5 class="card-header">
+            Dados pessoais de {{ membro.nome_completo }}
+        </h5>
+
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <!-- Dados Pessoais -->
+                <tr>
+                    <td>Data de Nascimento</td>
+                    <td>{{ membro.dt_nascimento |date:"d/m/Y" }}</td>
+                </tr>
+                <tr>
+                    <td>CPF</td>
+                    <td>{% if membro.cpf %}{{ membro.cpf }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Sexo</td>
+                    <td>{% if membro.sexo %}{{ membro.sexo }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Telefone</td>
+                    <td>{{ membro.telefone }}</td>
+                </tr>
+                <tr>
+                    <td>Celular</td>
+                    <td>{{ membro.celular }}</td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td>{{ membro.email }}</td>
+                </tr>
+
+                <tr>
+                    <td>Endereço</td>
+                    <td>{% if membro.address %}{{ membro.address }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Bairro</td>
+                    <td>{% if membro.neighborhood %}{{ membro.neighborhood }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Cidade</td>
+                    <td>{% if membro.city %}{{ membro.city }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Estado</td>
+                    <td>{% if membro.state %}{{ membro.state }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>CEP</td>
+                    <td>{% if membro.cep %}{{ membro.cep }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <!-- Profissionais -->
+                <tr>
+                    <td>Profissão</td>
+                    <td>{% if membro.profession %}{{ membro.profession }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Formação</td>
+                    <td>
+                        {% if membro.education %}
+                        {{ membro.education }}
+                        {% else %}
+                        Não informado
+                        {% endif %}
+                    </td>
+                </tr>
+                {% if membro.estado_civil == 'Casado' %}
+                <tr>
+                    <td>Conjugue</td>
+                    <td>{% if membro.conjugue %}{{ membro.conjugue }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                {% if membro.conjugue and membro.dt_matrimonio %}
+                <tr>
+                    <td>Data do matrimônio</td>
+                    <td>
+                       {% if membro.dt_matrimonio %} {{ membro.dt_matrimonio | date:"d/m/Y" }}{% else %}Não informado{% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                {% if membro.estado_civil %}{{ membro.estado_civil }}{% else %}Não informado{% endif %}
+                {% endif %}
+                {% endif %}
+                <tr>
+                    <td>Aposentado</td>
+                    <td>{% if membro.is_retired %}SIM{% else %}Não{% endif %}</td>
+                </tr>
+                
+                <tr>
+                    <td>Mentor</td>
+                    <td>{% if membro.mentor %}{{ membro.mentor }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Data da promessa</td>
+                    <td>{% if membro.dt_promessa %}{{ membro.dt_promessa |date:"d/m/Y"}} {% else %}Não informado {%endif%}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Formador(s)</td>
+                    <td>
+                        {% for formador in membro.formadores.all %}
+                        {{ formador.nome }},
+                        {% empty %}
+                        Não informado
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pastoral(s)</td>
+                    <td>
+                        {% for pastoral in membro.pastorais.all %}
+                        {{ pastoral.get_nome_display }},
+                        {% empty %}
+                        Não informado
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Afastado</td>
+                    <td>{% if membro.afastado %}Não{% else %}Sim{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Falecido</td>
+                    <td>{% if membro.atestado_obito %}
+                        Sim
+                        <a href="{{membro.atestado_obito.url }}">
+                            Atestado de obito</a>
+                        {% else %}
+                        Não
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

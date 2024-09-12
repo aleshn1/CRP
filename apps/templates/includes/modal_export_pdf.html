@@ -1,0 +1,52 @@
+{% load static %}
+<div class="modal fade" id="exportModalPdf" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exportModalLabel">Exportar Dados para PDF</h5>
+            </div>
+            <div class="modal-body">
+                <form id="exportForm" action="{% url 'export_pdf' %}" method="GET">
+                    <div class="form-group">
+                        <label for="colunas">Selecione as colunas para exportar: </label>
+                        <div class="badge bg-primary text-wrap" style="width: 6rem;">
+                            ctrl + mouse
+                        </div>
+                        <select id="colunas" size="9" name="colunas" multiple class="form-control">
+                            <option value="Selecionar Tudo">Selecionar Tudo</option>
+                            <option value="Nome">Nome</option>
+                            <option value="Data de Nascimento">Data de Nascimento</option>
+                            <option value="Telefone">Telefone</option>
+                            <option value="Celular">Celular</option>
+                            <option value="Orientador">Orientador</option>
+                            <option value="Pastoral">Pastoral</option>
+                            <option value="Elo">Elo</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary mt-5"><i class="fa fa-file-pdf-o pe-1"></i>Exportar
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger mt-5" data-bs-dismiss="modal"><i
+                                class="fa fa-close pe-1"></i>Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const selectTodos = document.getElementById('colunas');
+
+    selectTodos.addEventListener('change', function () {const options = selectTodos.options;
+        const selecionarTudoValue = 'Selecionar Tudo';
+
+        // Se a opção "Selecionar Tudo" estiver marcada, marque todas as outras opções
+        if (options[0].selected) {for (let i = 1; i < options.length; i++) {
+                options[i].selected = true;
+            }
+        }
+    });
+</script>

@@ -1,0 +1,146 @@
+{% extends 'layouts/base.html' %}
+{% block titulo %}Mais Detalhes | {% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="col ">
+    {% include 'includes/messages_component.html' with messages=messages %}
+    <div class="mt-4">
+        <a class="p-2 ms-3" href="{% url 'list_vocacionados' %}">
+            <i class="fa fa-arrow-left"></i> Voltar</a>
+    </div>
+    <div class="card ms-4 me-4 mt-4 mb-4">
+        <h5 class="card-header">
+            Dados pessoais de {{ vocacionado.nome_completo }}
+        </h5>
+
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td>Data de Nascimento</td>
+                    <td>{{ vocacionado.data_nascimento |date:"d/m/Y" }}</td>
+                </tr>
+                <tr>
+                    <td>CPF</td>
+                    <td>{% if vocacionado.cpf %}{{ vocacionado.cpf }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Sexo</td>
+                    <td>{% if vocacionado.sexo %}{{ vocacionado.sexo }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Telefone</td>
+                    <td>{{ vocacionado.telefone }}</td>
+                </tr>
+                <tr>
+                    <td>Celular</td>
+                    <td>{{ vocacionado.celular }}</td>
+                </tr>
+                <tr>
+                    <td>E-mail</td>
+                    <td>{{ vocacionado.email }}</td>
+                </tr>
+
+                <tr>
+                    <td>Endereço</td>
+                    <td>{% if vocacionado.endereco %}{{ vocacionado.endereco }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Bairro</td>
+                    <td>{% if vocacionado.bairro %}{{ vocacionado.bairro }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Cidade</td>
+                    <td>{% if vocacionado.cidade %}{{ vocacionado.cidade }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Estado</td>
+                    <td>{% if vocacionado.estado %}{{ vocacionado.estado }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>CEP</td>
+                    <td>{% if vocacionado.cep %}{{ vocacionado.cep }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Profissão</td>
+                    <td>{% if vocacionado.profissao %}{{ vocacionado.profissao }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Formação Academica</td>
+                    <td>
+                        {% if vocacionado.formacao_academica %}
+                        {{ vocacionado.formacao_academica }}
+                        {% else %}
+                        Não informado
+                        {% endif %}
+                    </td>
+                </tr>
+                {% if vocacionado.estado_civil == 'Casado' %}
+                <tr>
+                    <td>Conjugue</td>
+                    <td>{% if vocacionado.conjugue %}{{ vocacionado.conjugue }}{% else %}Não informado{% endif %}</td>
+                </tr>
+                {% if vocacionado.conjugue and vocacionado.dt_matrimonio %}
+                <tr>
+                    <td>Data do matrimônio</td>
+                    <td>
+                        {% if vocacionado.data_matrimonio %} {{ vocacionado.data_matrimonio | date:"d/m/Y" }}{% else %}Não informado{% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                {% if vocacionado.estado_civil %}{{ vocacionado.estado_civil }}{% else %}Não informado{% endif %}
+                {% endif %}
+                {% endif %}
+                <tr>
+                    <td>Aposentado</td>
+                    <td>{% if vocacionado.is_retired %}SIM{% else %}Não{% endif %}</td>
+                </tr>
+
+                <!-- Igreja -->
+                <tr>
+                    <td>Data de Entrada</td>
+                    <td>{% if vocacionado.data_entrada %}{{ vocacionado.data_entrada |date:"d/m/Y"}}{% else %}Não informado{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Data da promessa</td>
+                    <td>{% if vocacionado.dt_promessa %}{{ vocacionado.dt_promessa |date:"d/m/Y"}} {% else %}Não informado {%endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Orientador(a)</td>
+                    <td>
+                        {% if vocacionado.orientador %}{{ vocacionado.orientador }}{% else %}Não informado {%endif%}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pastoral(s)</td>
+                    <td>
+                        {% for pastoral in vocacionado.pastorais.all %}
+                        {{ pastoral.get_nome_display }},
+                        {% empty %}
+                        Não informado
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Afastado</td>
+                    <td>{% if vocacionado.afastado %}Não{% else %}Sim{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Falecido</td>
+                    <td>{% if vocacionado.atestado_obito %}
+                        Sim
+                        <a href="{{vocacionado.atestado_obito.url }}">
+                            Atestado de obito</a>
+                        {% else %}
+                        Não
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

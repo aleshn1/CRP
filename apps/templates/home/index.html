@@ -1,0 +1,31 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} HOME {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+    <link href="/static/assets/css/style-home.css" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="body flex-grow-1 px-3">
+    <div class="container-lg">
+        <h1 class="title">Sistema de Cadastro</h1>
+        <h1 class="title"> Renascidos em Pentecostes</h1>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<!-- Plugins and scripts required by this view-->
+<script src="/static/assets/vendors/@coreui/utils/js/coreui-utils.js"></script>
+<script src="/static/assets/js/main.js"></script>
+<script>
+</script>
+
+{% endblock javascripts %}

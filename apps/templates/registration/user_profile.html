@@ -1,0 +1,78 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Minhas informações pessoais |{% endblock title %}
+{% load static %}
+{% block content %}
+
+<style>
+    .img-user-profile {
+          width: 200px;
+          height: 200px;
+        }
+</style>
+
+<div class="col ">
+    {% include 'includes/messages_component.html' with messages=messages %}
+    <div class="mt-4">
+        <a class="p-2 ms-3" href="{% url 'home' %}">
+            <i class="fa fa-arrow-left"></i> Voltar para home</a>
+    </div>
+    <div class="card ms-4 me-4 mt-4 mb-3">
+        <h5 class="card-header">
+            Minhas informações pessoais
+        </h5>
+
+        <div class="card-body">
+            <div class="d-flex">
+                <div class="p-0">
+                    {% if request.user.membros.imagem_perfil %}
+                        <img class="img-thumbnail img-user-profile border-1"
+                             height="150"
+                             src="{{ request.user.membros.imagem_perfil.url }}"
+                             alt="Imagem de perfil"
+                             width="150">
+                        {% else %}
+                        <img class="img-thumbnail border-1"
+                             height="10"
+                             src="{% static '/assets/img/profile.jpg' %}"
+                             alt="Imagem de perfil"
+                             width="150">
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="ms-0">
+                <h4 class="text-muted">{{ membro.nome_completo }}</h4>
+                <ul class="m-0" style="list-style: none; padding: 0">
+                    {% if user.email %}
+                    <li class="text-muted"><strong>E-mail:</strong> {{ user.email }}</li>
+                    {% else %}
+                    <li class="text-muted"><strong>E-mail:</strong><span class="badge badge-danger">
+                                Não possui Endereço eletrônico cadastrado</span>
+                    </li>
+                    {% endif %}
+                    <li class="text-muted">
+                        <strong>Pastoral(s):</strong>
+                        {% for pastoral in request.user.membros.pastorais.all %}
+                        {{ pastoral.get_nome_display }},
+                        {% empty %}
+                        Não informado
+                        {% endfor %}
+                    </li>
+                    <li class="text-muted"><strong>Elo: </strong>{{membro.get_elo_display}}</li>
+                    <li class="text-muted"><strong>Último Login: </strong> {{ user.last_login }}</li>
+                    <li class="text-muted"><strong>Cadastrado desde: </strong>
+                        {{user.date_joined | date:'d/m/Y' }}
+                    </li>
+
+                </ul>
+
+                <div class="mt-5">
+                    <a class="btn btn-primary text-white" href="{% url 'update_profile' user.id %}">
+                        <i class="fa fa-edit"></i> Editar meus dados</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

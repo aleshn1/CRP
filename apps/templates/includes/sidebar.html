@@ -1,0 +1,67 @@
+{% load static %}
+<div class="sidebar sidebar-fixed" id="sidebar">
+    <div class="sidebar-brand d-none d-md-flex">
+        <a class="header-brand" href="{% url 'home' %}">
+             <span class="text-white"><img src="{% static 'assets/img/logo_rp.jpg' %}" style="
+               margin-bottom:-2px;margin-right:10px" width="50" height="40" alt="logo-crp">CRP</span>
+        </a>
+    </div>
+    <ul class="nav flex-column sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">
+                <i class="fa fa-home"></i>
+                <span class="ms-4">Home</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'list-members' %}">
+                <i class="fa fa-users mr-2"></i>
+                <span class="ms-4">Membros</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'list_vocacionados' %}">
+                <i class="fa fa-users mr-2"></i>
+                <span class="ms-4">Vocacionados</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'list_voluntarios' %}">
+                <i class="fa fa-users mr-2"></i>
+                <span class="ms-4">Voluntarios</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'pastorais'  %}">
+                <i class="fa fa-book mr-2"></i>
+                <span class="ms-4">Pastorais</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'elos'  %}">
+                <i class="fa fa-book mr-2"></i>
+                <span class="ms-4">Elos</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'historicos'  %}">
+                <i class="fa fa-history mr-2"></i>
+                <span class="ms-4">Histórico</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<script>
+  function showLoadingSpinner() {
+    document.getElementById("loading-spinner").classList.remove("d-none");
+  }
+
+  function hideLoadingSpinner() {
+    document.getElementById("loading-spinner").classList.add("d-none");
+  }
+</script>
+    

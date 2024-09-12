@@ -1,0 +1,11 @@
+body {
+    background: url('/static/assets/img/cover-crp.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+
+}
+h1, .title{
+text-align: center;
+    color: #01070e;
+    text-shadow: 4px 4px 4px rgba(56, 54, 54, 0.996);
+}

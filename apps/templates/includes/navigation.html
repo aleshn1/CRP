@@ -1,0 +1,74 @@
+{% load static %}
+
+<style>
+    .img-user-navigation {
+        width: 50px;
+        height: 40px;
+        }
+</style>
+<header class="header header-sticky">
+    <div class="container-fluid">
+        <button class="header-toggler px-md-0 me-md-3" type="button"
+                onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+            <svg class="icon icon-lg">
+                <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
+            </svg>
+        </button>
+        <a class="header-brand d-md-none" href="{% url 'home' %}" style="text-align : center; margin-left:20%;  margin-top:-10px">
+            <img src="{% static 'assets/img/logo_rp.jpg' %}" width="40" height="40" alt="logo-crp">CRP
+        </a>
+        <ul class="header-nav ms-3">
+            {% if user.is_authenticated %}
+            <p class="mb-0 d-none d-lg-block">Bem-vindo(a) <strong>{{ user.get_full_name|capfirst }}</strong></p>
+            {% else %}
+            <p class="mb-0 d-none d-lg-block">Bem-vindo(a) <strong>Visitante</strong></p>
+            {% endif %}
+            <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                                             aria-expanded="false">
+                <div class="avatar avatar-md">
+                    <div class="d-flex rounded">
+                        <div class="p-0">
+                            {% if request.user.membros.imagem_perfil %}
+                            <img class="img-thumbnail img-user-navigation border-1"
+                                 height="100"
+                                 src="{{ request.user.membros.imagem_perfil.url }}"
+                                 alt="Imagem de perfil"
+                                 style="border-radius: 100%;"
+                                 width="200">
+                            {% else %}
+
+                            <img class="img-thumbnail border-1"
+                                 height="10"
+                                 src="{% static '/assets/img/profile.jpg' %}"
+                                 alt="Imagem de perfil"
+                                 style="border-radius: 50%;"
+                                 width="200">
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+                <div class="dropdown-menu dropdown-menu-end pt-0">
+                    {% if user.is_superuser or user.is_staff %}
+                    <a class="dropdown-item" target="_blank" href="{% url 'admin:index' %}">
+                        <i class="fa fa-gears"></i> Administração do Sistema
+                    </a>
+                    {% endif %}
+                    <a class="dropdown-item" href="{% url 'user_profile' %}">
+                        <i class="fa fa-user"></i> Meu Perfil
+                    </a>
+                    <a class="dropdown-item " href="{% url 'logout' %}">
+                        <i class="fa fa-sign-out"></i> Sair
+                    </a>
+
+                    <a class="dropdown-item">
+                        <i class="fa fa-clock-o"></i>
+                        Ultimo login {{ user.last_login |date:"d/m/Y H:i" }}
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</header>
