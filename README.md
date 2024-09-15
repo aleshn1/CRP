@@ -1,5 +1,4 @@
 
-
 Configuração do projeto:
 
 criar venv
@@ -10,10 +9,6 @@ python -m venv <nome da venv>
 ```
 <comando_de_instalação>
 ```
-
-https://github.com/thiagopena/djangoSIGE
-https://github.com/AlannKPerini/TUTORIAL_PROJETO_DJANGO_2024
-
 
 Especificações
 
@@ -51,8 +46,6 @@ USE_I18N = True
 
 USE_TZ = True
 ```
-
-
 # 1° passo
 
 criar venv 
