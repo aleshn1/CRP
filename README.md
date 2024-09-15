@@ -63,13 +63,13 @@ instalar dependencias
 
 pip install -r requirements.txt
 
-3° passo
+# 3° passo
 
 Criar o usuario(admin)
 
 python manage.py createsuperuser
 
-4° passo
+# 4° passo
 
 Iniciar app
 
